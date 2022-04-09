@@ -1,6 +1,7 @@
 package com.rubylearner.scoped.noteapplication.feature.note.data.database
 
 import androidx.room.*
+import com.rubylearner.scoped.noteapplication.feature.note.data.model.Note
 import kotlinx.coroutines.flow.Flow
 
 
