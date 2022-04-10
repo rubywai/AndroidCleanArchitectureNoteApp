@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NoteUsage @Inject constructor(private val noteRepository: NoteRepositoryImpl) {
+class NoteUsage @Inject constructor(private val noteRepository: NoteRepository) {
     fun getAllNotes(): Flow<List<NoteEntity>> = noteRepository.getAllNotes()
 
     suspend fun insertNote(noteEntity: NoteEntity) = noteRepository.insert(noteEntity)
