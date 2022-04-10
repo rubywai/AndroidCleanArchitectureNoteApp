@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -14,7 +15,7 @@ import com.rubylearner.scoped.cleanarchitecturetodolist.databinding.NoteListScre
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.view.adapter.NoteListAdapter
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.viewmodel.NoteViewModel
 
-class NoteListFragment : Fragment(R.layout.note_list_screen) {
+class NoteListFragment : Fragment(R.layout.note_list_screen),NoteListAdapter.OnDelete {
     private  var noteListScreenBinding : NoteListScreenBinding? = null
     private  val binding get() = noteListScreenBinding!!
     private  val noteViewModel : NoteViewModel by activityViewModels()
@@ -27,7 +28,7 @@ class NoteListFragment : Fragment(R.layout.note_list_screen) {
         noteListScreenBinding = NoteListScreenBinding.inflate(layoutInflater,container,false)
         lifecycleScope.launchWhenStarted {
             noteViewModel.noteState.collect{
-                noteListAdapter = NoteListAdapter(it)
+                noteListAdapter = NoteListAdapter(it,this@NoteListFragment)
                 binding.noteListRecycler.layoutManager = LinearLayoutManager(context)
                 binding.noteListRecycler.adapter = noteListAdapter
             }
@@ -41,5 +42,9 @@ class NoteListFragment : Fragment(R.layout.note_list_screen) {
     override fun onDestroy() {
         noteListScreenBinding = null
         super.onDestroy()
+    }
+
+    override fun onDelete(position: Int) {
+        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
     }
 }
