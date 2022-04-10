@@ -38,4 +38,9 @@ class NoteViewModel @Inject constructor(private val noteUseAge : NoteUsage) : Vi
         }
 
     }
+    fun deleteNote(note : NoteEntity) {
+        viewModelScope.launch {
+            noteUseAge.deleteNote(note)
+        }
+    }
 }

@@ -10,7 +10,7 @@ import com.rubylearner.scoped.cleanarchitecturetodolist.R
 import com.rubylearner.scoped.cleanarchitecturetodolist.databinding.NoteLayoutBinding
 import com.rubylearner.scoped.noteapplication.feature.note.domain.entity.NoteEntity
 
-class NoteListAdapter(private val notes : List<NoteEntity>,private val onDelete : OnDelete) :  RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>(){
+class NoteListAdapter(private val notes : List<NoteEntity>,private val onDelete : DeleteListener) :  RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>(){
     class NoteViewHolder(view : NoteLayoutBinding) : RecyclerView.ViewHolder(view.root){
         var textView : TextView = view.txtNote
         var delete : Button = view.delete
@@ -26,13 +26,13 @@ class NoteListAdapter(private val notes : List<NoteEntity>,private val onDelete 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.textView.text = notes.get(position).note
         holder.delete.setOnClickListener {
-            onDelete.onDelete(position)
+            onDelete.delete(notes.get(position))
         }
     }
 
     override fun getItemCount(): Int = notes.size
 
-    interface OnDelete{
-        fun onDelete(position: Int)
+    class DeleteListener(val onDelete : (note : NoteEntity)->Unit){
+       fun delete(note: NoteEntity) = onDelete(note)
     }
 }

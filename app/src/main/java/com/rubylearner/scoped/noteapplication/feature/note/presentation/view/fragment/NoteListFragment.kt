@@ -15,7 +15,7 @@ import com.rubylearner.scoped.cleanarchitecturetodolist.databinding.NoteListScre
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.view.adapter.NoteListAdapter
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.viewmodel.NoteViewModel
 
-class NoteListFragment : Fragment(R.layout.note_list_screen),NoteListAdapter.OnDelete {
+class NoteListFragment : Fragment(R.layout.note_list_screen) {
     private  var noteListScreenBinding : NoteListScreenBinding? = null
     private  val binding get() = noteListScreenBinding!!
     private  val noteViewModel : NoteViewModel by activityViewModels()
@@ -28,7 +28,9 @@ class NoteListFragment : Fragment(R.layout.note_list_screen),NoteListAdapter.OnD
         noteListScreenBinding = NoteListScreenBinding.inflate(layoutInflater,container,false)
         lifecycleScope.launchWhenStarted {
             noteViewModel.noteState.collect{
-                noteListAdapter = NoteListAdapter(it,this@NoteListFragment)
+                noteListAdapter = NoteListAdapter(it, NoteListAdapter.DeleteListener {
+                    noteViewModel.deleteNote(it)
+                })
                 binding.noteListRecycler.layoutManager = LinearLayoutManager(context)
                 binding.noteListRecycler.adapter = noteListAdapter
             }
@@ -44,7 +46,4 @@ class NoteListFragment : Fragment(R.layout.note_list_screen),NoteListAdapter.OnD
         super.onDestroy()
     }
 
-    override fun onDelete(position: Int) {
-        Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
-    }
 }
