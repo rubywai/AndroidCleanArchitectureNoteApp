@@ -12,6 +12,7 @@
         tool:layout="@layout/note_list_screen"
         >
         <action
+
             android:id="@+id/action_noteListFragment_to_noteAddFragment"
             app:destination="@id/noteAddFragment" />
         <action
@@ -27,5 +28,9 @@
         android:id="@+id/noteEditFragment"
         tool:layout="@layout/fragment_note_edit"
         android:name="com.rubylearner.scoped.noteapplication.feature.note.presentation.view.fragment.NoteEditFragment"
-        android:label="NoteEditFragment" />
+        android:label="NoteEditFragment" >
+        <argument
+            android:name="noteEntity"
+            app:argType="com.rubylearner.scoped.noteapplication.feature.note.domain.entity.NoteEntity" />
+    </fragment>
 </navigation>
