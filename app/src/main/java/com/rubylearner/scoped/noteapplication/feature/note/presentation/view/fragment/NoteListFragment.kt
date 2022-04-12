@@ -16,27 +16,32 @@ import com.rubylearner.scoped.noteapplication.feature.note.presentation.view.ada
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.viewmodel.NoteViewModel
 
 class NoteListFragment : Fragment(R.layout.note_list_screen) {
-    private  var noteListScreenBinding : NoteListScreenBinding? = null
-    private  val binding get() = noteListScreenBinding!!
-    private  val noteViewModel : NoteViewModel by activityViewModels()
+    private var noteListScreenBinding: NoteListScreenBinding? = null
+    private val binding get() = noteListScreenBinding!!
+    private val noteViewModel: NoteViewModel by activityViewModels()
     private lateinit var noteListAdapter: NoteListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        noteListScreenBinding = NoteListScreenBinding.inflate(layoutInflater,container,false)
+        noteListScreenBinding = NoteListScreenBinding.inflate(layoutInflater, container, false)
         lifecycleScope.launchWhenStarted {
-            noteViewModel.noteState.collect{
-                noteListAdapter = NoteListAdapter(it, NoteListAdapter.DeleteListener {
+            noteViewModel.noteState.collect {
+                noteListAdapter = NoteListAdapter(
+                    it,
+                    NoteListAdapter.DeleteListener {
                     noteViewModel.deleteNote(it)
-                })
+                },
+                    NoteListAdapter.CardClickListener {
+                        findNavController().navigate(R.id.action_noteListFragment_to_noteEditFragment)
+                    })
                 binding.noteListRecycler.layoutManager = LinearLayoutManager(context)
                 binding.noteListRecycler.adapter = noteListAdapter
             }
         }
         binding.floatingActionButton.setOnClickListener {
-             findNavController().navigate(R.id.action_noteListFragment_to_noteAddFragment)
+            findNavController().navigate(R.id.action_noteListFragment_to_noteAddFragment)
         }
         return binding.root
     }
