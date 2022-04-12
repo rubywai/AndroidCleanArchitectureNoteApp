@@ -34,6 +34,7 @@ class NoteListFragment : Fragment(R.layout.note_list_screen) {
                     noteViewModel.deleteNote(it)
                 },
                     NoteListAdapter.CardClickListener {
+
                         findNavController().navigate(R.id.action_noteListFragment_to_noteEditFragment)
                     })
                 binding.noteListRecycler.layoutManager = LinearLayoutManager(context)

@@ -4,6 +4,8 @@ buildscript {
         compose_version = '1.1.0'
     }
     dependencies {
+        def nav_version = "2.4.2"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.40.5"
     }
 }//
