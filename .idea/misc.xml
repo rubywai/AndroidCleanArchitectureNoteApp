@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.1205" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/fragment_note_add.xml" value="0.15989583333333332" />
+        <entry key="app/src/main/res/layout/fragment_note_edit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/note_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/note_list_screen.xml" value="0.15989583333333332" />
       </map>
