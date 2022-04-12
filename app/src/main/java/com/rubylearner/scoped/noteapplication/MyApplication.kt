@@ -1,4 +1,4 @@
-package com.rubylearner.scoped
+package com.rubylearner.scoped.noteapplication
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

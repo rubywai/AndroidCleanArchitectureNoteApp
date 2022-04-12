@@ -1,4 +1,4 @@
-package com.rubylearner.scoped.noteapplication.feature.note.presentation.view.acitivity
+package com.rubylearner.scoped.noteapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
