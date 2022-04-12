@@ -34,7 +34,7 @@ class NoteViewModel @Inject constructor(private val noteUseAge : NoteUsage) : Vi
     }
     fun setNote(note : String){
         viewModelScope.launch {
-            noteUseAge.insertNote(NoteEntity(id = null,note = note, color = 200))
+            noteUseAge.insertNote(NoteEntity(note = note, color = 200))
         }
 
     }

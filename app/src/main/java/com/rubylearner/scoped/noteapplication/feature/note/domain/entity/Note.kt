@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class NoteEntity(
-    val id : Int?,
+    val id : Int? = null,
     val note : String,
     val color : Int
 ) : Parcelable
