@@ -6,7 +6,10 @@ import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rubylearner.scoped.cleanarchitecturetodolist.R
 import com.rubylearner.scoped.cleanarchitecturetodolist.databinding.ActivityMainBinding
@@ -22,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        val navController = (supportFragmentManager
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment)
+            .navController
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        mainBinding.noteAddToolBar.setupWithNavController(navController,appBarConfiguration)
         setContentView(mainBinding.root)
 
     }

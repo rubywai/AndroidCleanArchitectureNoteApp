@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/noteListFragment"
         android:name="com.rubylearner.scoped.noteapplication.feature.note.presentation.view.fragment.NoteListFragment"
-        android:label="NoteListFragment"
+        android:label="Clean Architecture Note Lists"
         tool:layout="@layout/note_list_screen"
         >
         <action
@@ -22,13 +22,13 @@
     <fragment
         android:id="@+id/noteAddFragment"
         android:name="com.rubylearner.scoped.noteapplication.feature.note.presentation.view.fragment.NoteAddFragment"
-        android:label="fragment_note_add"
+        android:label="Note Add Screen"
         tool:layout="@layout/fragment_note_add" />
     <fragment
         android:id="@+id/noteEditFragment"
         tool:layout="@layout/fragment_note_edit"
         android:name="com.rubylearner.scoped.noteapplication.feature.note.presentation.view.fragment.NoteEditFragment"
-        android:label="NoteEditFragment" >
+        android:label="Note Edit Screen" >
         <argument
             android:name="noteEntity"
             app:argType="com.rubylearner.scoped.noteapplication.feature.note.domain.entity.NoteEntity" />
