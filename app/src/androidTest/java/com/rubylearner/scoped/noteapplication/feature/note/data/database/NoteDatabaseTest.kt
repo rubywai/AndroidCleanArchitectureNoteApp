@@ -39,7 +39,6 @@ class NoteDatabaseTest : TestCase() {
         noteDao.insert(note)
         val notes = noteDao.getNotes()
         assertEquals(notes.contains(note),true)
-
         //Update
         val newNote = Note(id =1,note = "Edited Note",color = 200)
         noteDao.update(newNote)
