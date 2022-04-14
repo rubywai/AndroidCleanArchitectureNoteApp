@@ -44,6 +44,10 @@ class NoteDatabaseTest : TestCase() {
         noteDao.update(newNote)
         assertEquals(notes.contains(newNote),true)
 
+        //Delete
+        noteDao.delete(newNote)
+        assertEquals(notes.contains(newNote),false)
+
 
 
     }
