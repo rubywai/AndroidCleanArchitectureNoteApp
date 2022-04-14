@@ -33,11 +33,20 @@ class NoteDatabaseTest : TestCase() {
 
     @Test
     @Throws(Exception::class)
-    fun writeUserAndReadNote() = runBlocking {
-        val note: Note = Note(id = 1, note = "Testing Note", color = 200)
+    fun writeReadDeleteNote() = runBlocking {
+        //Write Read
+        val note = Note(id = 1, note = "Testing Note", color = 200)
         noteDao.insert(note)
         val notes = noteDao.getNotes()
         assertEquals(notes.contains(note),true)
 
+        //Update
+        val newNote = Note(id =1,note = "Edited Note",color = 200)
+        noteDao.update(newNote)
+        assertEquals(notes.contains(newNote),true)
+
+
+
     }
+
 }
