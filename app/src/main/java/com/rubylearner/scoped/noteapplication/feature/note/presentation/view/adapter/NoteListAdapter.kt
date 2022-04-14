@@ -1,5 +1,6 @@
 package com.rubylearner.scoped.noteapplication.feature.note.presentation.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class NoteListAdapter(
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        Log.d("paging_debugging", ": ${getItem(position)} ")
         getItem(position).let {
             val noteEntity = it
             holder.textView.text = it?.note

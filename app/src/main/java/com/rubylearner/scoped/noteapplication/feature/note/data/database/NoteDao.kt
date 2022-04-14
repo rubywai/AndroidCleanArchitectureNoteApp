@@ -11,6 +11,10 @@ interface  NoteDao {
     @Query("select * from note")
     fun getAllNote() : PagingSource<Int,Note>
 
+    //for testing purpose
+    @Query("select * from note")
+    suspend fun getNotes() : List<Note>
+
     @Insert
     suspend fun insert(note : Note)
 

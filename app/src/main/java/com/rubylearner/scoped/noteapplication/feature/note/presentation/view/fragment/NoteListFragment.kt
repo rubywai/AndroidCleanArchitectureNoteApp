@@ -43,7 +43,6 @@ class NoteListFragment : Fragment(R.layout.note_list_screen) {
         }
         lifecycleScope.launchWhenStarted {
             noteViewModel.getData().collectLatest {
-                Log.d("database_debugging", "data getting: $it")
                  noteListAdapter.submitData(it)
             }
         }
