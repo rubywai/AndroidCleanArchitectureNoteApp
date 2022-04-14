@@ -2,6 +2,7 @@ package com.rubylearner.scoped.noteapplication.feature.note.data.repository
 
 import android.content.Context
 import android.util.Log
+import androidx.paging.PagingSource
 import com.rubylearner.scoped.noteapplication.feature.note.data.database.NoteDao
 import com.rubylearner.scoped.noteapplication.feature.note.data.database.NoteDatabase
 import com.rubylearner.scoped.noteapplication.feature.note.domain.entity.NoteEntity
@@ -9,21 +10,15 @@ import com.rubylearner.scoped.noteapplication.feature.note.domain.repository.Not
 import kotlinx.coroutines.flow.map
 import com.rubylearner.scoped.noteapplication.feature.note.data.mapper.toEntity
 import com.rubylearner.scoped.noteapplication.feature.note.data.mapper.toModel
+import com.rubylearner.scoped.noteapplication.feature.note.data.model.Note
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NoteRepositoryImpl @Inject constructor(private val noteDao: NoteDao) : NoteRepository {
-    override fun getAllNotes() = flow {
-        noteDao.getAllNote()
-            .collect {
-                val m = it.map {
-                    it.toEntity()
-                }
-
-                emit(m)
-            }
+    override fun getAllNotes(): PagingSource<Int, Note> {
+       return noteDao.getAllNote()
     }
 
 

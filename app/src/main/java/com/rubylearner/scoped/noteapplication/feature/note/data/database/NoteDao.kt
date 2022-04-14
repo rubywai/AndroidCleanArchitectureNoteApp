@@ -1,5 +1,6 @@
 package com.rubylearner.scoped.noteapplication.feature.note.data.database
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.rubylearner.scoped.noteapplication.feature.note.data.model.Note
 import kotlinx.coroutines.flow.Flow
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface  NoteDao {
     @Query("select * from note")
-    fun getAllNote() : Flow<List<Note>>
+    fun getAllNote() : PagingSource<Int,Note>
 
     @Insert
     suspend fun insert(note : Note)

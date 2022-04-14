@@ -1,6 +1,7 @@
 package com.rubylearner.scoped.noteapplication.feature.note.presentation.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.rubylearner.scoped.cleanarchitecturetodolist.R
 import com.rubylearner.scoped.cleanarchitecturetodolist.databinding.NoteListScreenBinding
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.view.adapter.NoteListAdapter
 import com.rubylearner.scoped.noteapplication.feature.note.presentation.viewmodel.NoteViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 class NoteListFragment : Fragment(R.layout.note_list_screen) {
     private var noteListScreenBinding: NoteListScreenBinding? = null
@@ -26,23 +28,24 @@ class NoteListFragment : Fragment(R.layout.note_list_screen) {
         savedInstanceState: Bundle?
     ): View {
         noteListScreenBinding = NoteListScreenBinding.inflate(layoutInflater, container, false)
-        lifecycleScope.launchWhenStarted {
-            noteViewModel.noteState.collect {
-                noteListAdapter = NoteListAdapter(
-                    it,
-                    NoteListAdapter.DeleteListener {
-                    noteViewModel.deleteNote(it)
-                },
-                    NoteListAdapter.CardClickListener {
-                       val action =  NoteListFragmentDirections.actionNoteListFragmentToNoteEditFragment(it)
-                        findNavController().navigate(action)
-                    })
-                binding.noteListRecycler.layoutManager = LinearLayoutManager(context)
-                binding.noteListRecycler.adapter = noteListAdapter
-            }
-        }
+        noteListAdapter = NoteListAdapter(
+            NoteListAdapter.DeleteListener {
+                noteViewModel.deleteNote(it)
+            },
+            NoteListAdapter.CardClickListener {
+                val action =  NoteListFragmentDirections.actionNoteListFragmentToNoteEditFragment(it)
+                findNavController().navigate(action)
+            })
+        binding.noteListRecycler.layoutManager = LinearLayoutManager(context)
+        binding.noteListRecycler.adapter = noteListAdapter
         binding.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_noteListFragment_to_noteAddFragment)
+        }
+        lifecycleScope.launchWhenStarted {
+            noteViewModel.getData().collectLatest {
+                Log.d("database_debugging", "data getting: $it")
+                 noteListAdapter.submitData(it)
+            }
         }
         return binding.root
     }

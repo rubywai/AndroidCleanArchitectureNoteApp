@@ -1,36 +1,27 @@
 package com.rubylearner.scoped.noteapplication.feature.note.presentation.viewmodel
 
-import android.app.Application
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
-import com.rubylearner.scoped.noteapplication.feature.note.data.model.Note
-import com.rubylearner.scoped.noteapplication.feature.note.data.repository.NoteRepositoryImpl
+import androidx.paging.*
+import com.rubylearner.scoped.noteapplication.feature.note.data.mapper.toEntity
 import com.rubylearner.scoped.noteapplication.feature.note.domain.entity.NoteEntity
-import com.rubylearner.scoped.noteapplication.feature.note.domain.repository.NoteRepository
 import com.rubylearner.scoped.noteapplication.feature.note.domain.useage.NoteUsage
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 @HiltViewModel
 class NoteViewModel @Inject constructor(private val noteUseAge : NoteUsage) : ViewModel() {
-    val noteState : MutableStateFlow<List<NoteEntity>> = MutableStateFlow(mutableListOf())
-    init {
-        getData()
-    }
-     private fun getData(){
-        viewModelScope.launch(Dispatchers.IO) {
-            noteUseAge.getAllNotes().collect{
-                noteState.value = it
+    fun getData(): Flow<PagingData<NoteEntity>> {
+        Log.d("database_debugging", "getData: called")
+        return Pager(PagingConfig(20)) { noteUseAge.getAllNote() }
+            .flow.cachedIn(viewModelScope)
+            .map {
+                it.map {
+                    it.toEntity()
+                }
             }
-        }
     }
     fun setNote(note : String){
         viewModelScope.launch {
